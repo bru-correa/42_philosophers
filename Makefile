@@ -1,5 +1,5 @@
 NAME				= philo
-CC					= cc
+CC					= clang
 CFLAGS				= -Wall -Wextra -Werror -I$(LIBFT_DIR) -I$(INCLUDE_DIR)
 CFLAGS_LIB			= -lft -L $(LIBFT_DIR)
 
@@ -10,11 +10,13 @@ LIB_DIR				= lib
 LIBFT_DIR			= lib/libft
 
 SRC_FILES			= $(shell find src/ -type f -name '*.c')
-SRC_FILES			= $(foreach filename,$(FILENAMES),$(SRC_DIR)/$(filename).c)
+# SRC_FILES			= $(foreach filename,$(FILENAMES),$(SRC_DIR)/$(filename).c)
 OBJ_FILES			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
-MAIN				= philo.c
+MAIN				= philosophers.c
 VALGRIND			= valgrind --leak-check=full --show-leak-kinds=all
 VALGRIND			+= --track-origins=yes --quiet --tool=memcheck
+
+HELGRIND			= valgrind --tool=helgrind
 
 # ********** RULES ********** #
 
@@ -56,7 +58,13 @@ setup_debug:
 debug:				clean setup_debug all
 
 run:				all
-					$(VALGRIND) ./$(NAME)
+					./$(NAME)
+
+runv:				all
+					@$(VALGRIND) ./$(NAME)
+
+runh:				all
+					@$(HELGRIND) ./$(NAME)
 
 test:				all
 					./tests/tests.sh
