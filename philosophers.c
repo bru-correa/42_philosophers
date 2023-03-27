@@ -12,20 +12,13 @@
 
 #include "philosophers.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	int	timestamp;
-	int	start_time;
-	// get start time
-	// create forks
-	// create philosophers
-	start_time = get_start_time();
-	timestamp = get_timestamp(start_time);
-	ft_printf("Timestamp: %d\n", timestamp);
-	usleep(100000);
-	timestamp = get_timestamp(start_time);
-	ft_printf("Timestamp: %d\n", timestamp);
-	timestamp = get_timestamp(start_time);
-	ft_printf("Timestamp: %d\n", timestamp);
+	t_simulation	simulation;
+
+	simulation = setup_simulation(argc, argv);
+	(void)simulation; //HACK: Provisory
+	// create mutexes
+	// create philos
 	return (0);
 }
