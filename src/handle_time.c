@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include "libft.h"
+#include <sys/time.h>
 
 static unsigned int	get_time_in_ms(void);
 

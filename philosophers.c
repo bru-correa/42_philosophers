@@ -15,9 +15,12 @@
 int	main(int argc, char **argv)
 {
 	t_simulation	simulation;
+	t_manager		manager;
 
 	simulation = setup_simulation(argc, argv);
+	manager = create_manager(simulation.philo_count);
 	(void)simulation; //HACK: Provisory
+	(void)manager;
 	// create mutexes
 	// create philos
 	return (0);

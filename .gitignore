@@ -3,3 +3,4 @@ philo
 *.a
 compile_flags.txt
 debug
+tests

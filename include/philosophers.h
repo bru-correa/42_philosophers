@@ -26,6 +26,14 @@
 # define FAILURE 0
 # define SUCCESS 1
 
+# ifndef TRUE
+#  define TRUE 1
+# endif
+
+# ifndef FALSE
+#  define FALSE 0
+# endif
+
 /********** ENUMS **********/
 
 typedef enum u_status
@@ -47,16 +55,20 @@ typedef struct s_philosopher
 {
 	unsigned int	id; // NOTE: Optional
 	pthread_mutex_t	status_lock;
+	// pthread_mutex_t	*print_lock;
+	pthread_mutex_t	*stop_lock;
+	int				*stop;
 	t_status		status;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 }	t_philosopher;
 
-typedef struct s_logger
+typedef struct s_manager
 {
 	// last time philosophers ate...
-	t_status	*last_states;
-}	t_logger;
+	t_status	*previous_status;
+	int			*stop;
+}	t_manager;
 
 typedef struct s_simulation
 {
@@ -85,4 +97,11 @@ unsigned int	get_timestamp(unsigned int start_time);
  * In case of error, the program will exit with status code of 1
  */
 t_simulation	setup_simulation(int argc, char **argv);
+
+/**
+ * The manager is responsible for logging the philosophers actions,
+ * announcing deaths and tracking time
+ */
+t_manager		create_manager(int philo_count);
+
 #endif
