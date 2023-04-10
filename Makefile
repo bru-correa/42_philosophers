@@ -69,4 +69,7 @@ runh:				all
 test:				all
 					./tests/tests.sh
 
-.PHONY:	all run clean fclean re re_bonus debug setup_debug
+norm:
+					norminette | grep Error
+
+.PHONY:	all run clean fclean re re_bonus debug setup_debug norm

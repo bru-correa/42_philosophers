@@ -16,10 +16,6 @@
 /********** INCLUDES **********/
 
 # include <pthread.h>
-// # include <stdlib.h>
-// # include <unistd.h>
-// # include "libft.h"
-// # include <sys/time.h>
 
 /********** MACROS **********/
 
@@ -45,31 +41,6 @@ typedef enum u_status
 
 /********** STRUCTS **********/
 
-typedef struct s_fork
-{
-	int				available;
-	pthread_mutex_t	lock;
-}	t_fork;
-
-typedef struct s_philosopher
-{
-	unsigned int	id; // NOTE: Optional
-	pthread_mutex_t	status_lock;
-	// pthread_mutex_t	*print_lock;
-	pthread_mutex_t	*stop_lock;
-	int				*stop;
-	t_status		status;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
-}	t_philosopher;
-
-typedef struct s_manager
-{
-	// last time philosophers ate...
-	t_status	*previous_status;
-	int			*stop;
-}	t_manager;
-
 typedef struct s_simulation
 {
 	unsigned int	philo_count;
@@ -77,31 +48,47 @@ typedef struct s_simulation
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	int				start_time;
+	unsigned int	start_time;
+	int				stop;
+	pthread_mutex_t	print_lock;
+	pthread_mutex_t	stop_lock;
 }	t_simulation;
+
+typedef struct s_philo
+{
+	unsigned int	id;
+	unsigned int	meals_count;
+	unsigned int	last_meal_time;
+	pthread_mutex_t	last_meal_lock;
+	pthread_mutex_t	next_fork;
+	pthread_mutex_t	prev_fork;
+	t_simulation	*simulation;
+}	t_philo;
 
 /********** PROTOTYPES **********/
 
 /**
- * Get the number of seconds since the Epoch
+ * Get the current time in milliseconds
  */
-unsigned int	get_start_time(void);
+unsigned int	get_current_time(void);
 
 /**
- * Get how many time in ms have passed since the program started
+ * Get how many time in milliseconds have passed since `start_time`
  */
-unsigned int	get_timestamp(unsigned int start_time);
+unsigned int	get_delta_time(unsigned int start_time);
 
 /**
  * Check if `argv` arguments are valid and return the simulation setup.
  * In case of error, the program will exit with status code of 1
  */
-t_simulation	setup_simulation(int argc, char **argv);
+t_simulation	*create_simulation(int argc, char **argv);
 
-/**
- * The manager is responsible for logging the philosophers actions,
- * announcing deaths and tracking time
- */
-t_manager		create_manager(int philo_count);
+void			destroy_simulation(t_simulation *simulation);
+
+pthread_mutex_t	*create_forks(int count);
+
+void			destroy_forks(pthread_mutex_t *forks, int count);
+
+t_philo			*create_philos(t_simulation *simulation, pthread_mutex_t *forks);
 
 #endif

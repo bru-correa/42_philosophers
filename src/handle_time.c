@@ -16,12 +16,12 @@
 
 static unsigned int	get_time_in_ms(void);
 
-unsigned int	get_start_time(void)
+unsigned int	get_current_time(void)
 {
 	return (get_time_in_ms());
 }
 
-unsigned int	get_timestamp(unsigned int start_time)
+unsigned int	get_delta_time(unsigned int start_time)
 {
 	unsigned int	time_in_ms;
 
@@ -34,7 +34,7 @@ static unsigned int	get_time_in_ms(void)
 	struct timeval	tv;
 	unsigned int	time_in_usec;
 	unsigned int	time_in_ms;
-	
+
 	if (gettimeofday(&tv, NULL) == -1)
 	{
 		ft_putstr_fd("ERROR\nCan't get timestamp\n", STDERR_FILENO);
