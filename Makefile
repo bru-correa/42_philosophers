@@ -1,5 +1,5 @@
 NAME				= philo
-CC					= clang
+CC					= gcc
 CFLAGS				= -Wall -Wextra -Werror -I$(LIBFT_DIR) -I$(INCLUDE_DIR)
 CFLAGS_LIB			= -lft -L $(LIBFT_DIR)
 
@@ -58,13 +58,13 @@ setup_debug:
 debug:				clean setup_debug all
 
 run:				all
-					./$(NAME)
+					./$(NAME) 5 400 100 100 10
 
 runv:				all
-					@$(VALGRIND) ./$(NAME)
+					@$(VALGRIND) ./$(NAME) 5 400 100 100 10
 
 runh:				all
-					@$(HELGRIND) ./$(NAME)
+					@$(HELGRIND) ./$(NAME) 5 400 100 100 10
 
 test:				all
 					./tests/tests.sh

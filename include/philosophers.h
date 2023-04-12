@@ -89,6 +89,11 @@ pthread_mutex_t	*create_forks(int count);
 
 void			destroy_forks(pthread_mutex_t *forks, int count);
 
-t_philo			*create_philos(t_simulation *simulation, pthread_mutex_t *forks);
+t_philo			*create_philos(t_simulation *simulation,
+					pthread_mutex_t *forks);
+
+void			run_simulation(t_simulation *simulation, t_philo *philos);
+
+void			*routine(t_philo *philo);
 
 #endif

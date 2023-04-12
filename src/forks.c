@@ -19,7 +19,7 @@ pthread_mutex_t	*create_forks(int count)
 	pthread_mutex_t	*forks;
 	int				i;
 
-	forks = malloc(sizeof(pthread_mutex_t));
+	forks = malloc(sizeof(pthread_mutex_t) * count);
 	if (forks == NULL)
 		return (NULL);
 	i = 0;
