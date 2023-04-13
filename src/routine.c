@@ -11,10 +11,22 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <pthread.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void	*routine(t_philo *philo)
 {
-	printf("%d: Hello\n", philo->id);
+	if (philo->id % 2 == 0)
+		usleep(1000);
+	while (philo->meals_count != 0)
+	{
+		if (check_stop(philo->simulation) == TRUE)
+			return (NULL);
+		log_state_change(*philo, THINKING);
+		log_fork(*philo);
+		log_state_change(*philo, EATING);
+		usleep(philo->simulation->time_to_eat * 1000);
+	}
 	return (NULL);
 }

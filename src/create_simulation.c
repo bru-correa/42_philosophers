@@ -57,11 +57,12 @@ static void	check_arg_count(int argc)
 	}
 }
 
+// Return -1 in case of unlimited meals
 static int	set_meals_count(int argc, char *arg)
 {
 	if (argc == 6)
 		return (set_count(arg, "number_of_time_each_philosophers_must_eat"));
-	return (0);
+	return (-1);
 }
 
 static int	set_timer(char *arg, char *arg_name)

@@ -21,18 +21,17 @@ unsigned int	get_current_time(void)
 	return (get_time_in_ms());
 }
 
-unsigned int	get_delta_time(unsigned int start_time)
+unsigned int	get_delta_time(long long start_time)
 {
-	unsigned int	time_in_ms;
+	long long	current_time;
 
-	time_in_ms = get_time_in_ms();
-	return (time_in_ms - start_time);
+	current_time = get_time_in_ms();
+	return (current_time - start_time);
 }
 
 static unsigned int	get_time_in_ms(void)
 {
 	struct timeval	tv;
-	unsigned int	time_in_usec;
 	unsigned int	time_in_ms;
 
 	if (gettimeofday(&tv, NULL) == -1)
@@ -40,7 +39,6 @@ static unsigned int	get_time_in_ms(void)
 		ft_putstr_fd("ERROR\nCan't get timestamp\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	time_in_usec = (tv.tv_sec * 1000000) + tv.tv_usec;
-	time_in_ms = time_in_usec / 1000;
+	time_in_ms = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	return (time_in_ms);
 }

@@ -30,14 +30,9 @@
 #  define FALSE 0
 # endif
 
-/********** ENUMS **********/
-
-typedef enum u_status
-{
-	THINKING,
-	EATING,
-	SLEEPING
-}	t_status;
+# define EATING "eating"
+# define SLEEPING "sleeping"
+# define THINKING "thinking"
 
 /********** STRUCTS **********/
 
@@ -75,7 +70,7 @@ unsigned int	get_current_time(void);
 /**
  * Get how many time in milliseconds have passed since `start_time`
  */
-unsigned int	get_delta_time(unsigned int start_time);
+unsigned int	get_delta_time(long long start_time);
 
 /**
  * Check if `argv` arguments are valid and return the simulation setup.
@@ -94,6 +89,18 @@ t_philo			*create_philos(t_simulation *simulation,
 
 void			run_simulation(t_simulation *simulation, t_philo *philos);
 
+void			watch_philos(t_simulation *simulation, t_philo *philos);
+
 void			*routine(t_philo *philo);
+
+void			log_state_change(t_philo philo, char *state);
+
+void			log_death(t_philo philo);
+
+void			log_fork(t_philo philo);
+
+int				check_stop(t_simulation *simulation);
+
+void			set_stop(t_simulation *simulation, int status);
 
 #endif

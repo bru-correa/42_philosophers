@@ -25,7 +25,7 @@ void	run_simulation(t_simulation *simulation, t_philo *philos)
 	threads = start_threads(simulation->philo_count, philos);
 	if (threads == NULL)
 		return ;
-	// TODO: watch_philos
+	watch_philos(simulation, philos);
 	destroy_threads(threads, simulation->philo_count);
 }
 
