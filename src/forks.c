@@ -14,9 +14,9 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-pthread_mutex_t	*create_forks(int count)
+pthread_mutex_t	**create_forks(int count)
 {
-	pthread_mutex_t	*forks;
+	pthread_mutex_t	**forks;
 	int				i;
 
 	forks = malloc(sizeof(pthread_mutex_t) * count);
@@ -25,20 +25,24 @@ pthread_mutex_t	*create_forks(int count)
 	i = 0;
 	while (i < count)
 	{
-		pthread_mutex_init(&forks[i], NULL);
+		forks[i] = malloc(sizeof(pthread_mutex_t));
+		if (forks[i] == NULL)
+			return (NULL);
+		pthread_mutex_init(forks[i], NULL);
 		i++;
 	}
 	return (forks);
 }
 
-void	destroy_forks(pthread_mutex_t *forks, int count)
+void	destroy_forks(pthread_mutex_t **forks, int count)
 {
 	int				i;
 
 	i = 0;
 	while (i < count)
 	{
-		pthread_mutex_destroy(&forks[i]);
+		pthread_mutex_destroy(forks[i]);
+		free(forks[i]);
 		i++;
 	}
 	free(forks);

@@ -15,18 +15,21 @@
 #include <stdio.h>
 #include <unistd.h>
 
+// WARNING: Data race while checking meals count
 void	*routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	while (philo->meals_count != 0)
 	{
-		if (check_stop(philo->simulation) == TRUE)
-			return (NULL);
-		log_state_change(*philo, THINKING);
-		log_fork(*philo);
-		log_state_change(*philo, EATING);
-		usleep(philo->simulation->time_to_eat * 1000);
+		if (philo_think(philo) == FAILURE)
+			break;
+		if (philo_get_forks(philo) == FAILURE)
+			break;
+		if (philo_eat(philo) == FAILURE)
+			break ;
+		if (philo_sleep(philo) == FAILURE)
+			break ;
 	}
 	return (NULL);
 }

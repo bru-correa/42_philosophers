@@ -17,7 +17,7 @@
 int	main(int argc, char **argv)
 {
 	t_simulation	*simulation;
-	pthread_mutex_t	*forks;
+	pthread_mutex_t	**forks;
 	t_philo			*philos;
 
 	simulation = create_simulation(argc, argv);

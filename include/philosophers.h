@@ -39,7 +39,7 @@
 typedef struct s_simulation
 {
 	unsigned int	philo_count;
-	unsigned int	philo_meals_count;
+	int				philo_meals_count;
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
@@ -55,8 +55,8 @@ typedef struct s_philo
 	unsigned int	meals_count;
 	unsigned int	last_meal_time;
 	pthread_mutex_t	last_meal_lock;
-	pthread_mutex_t	next_fork;
-	pthread_mutex_t	prev_fork;
+	pthread_mutex_t	*next_fork;
+	pthread_mutex_t	*prev_fork;
 	t_simulation	*simulation;
 }	t_philo;
 
@@ -70,7 +70,7 @@ unsigned int	get_current_time(void);
 /**
  * Get how many time in milliseconds have passed since `start_time`
  */
-unsigned int	get_delta_time(long long start_time);
+unsigned int	get_delta_time(unsigned int start_time);
 
 /**
  * Check if `argv` arguments are valid and return the simulation setup.
@@ -80,12 +80,12 @@ t_simulation	*create_simulation(int argc, char **argv);
 
 void			destroy_simulation(t_simulation *simulation);
 
-pthread_mutex_t	*create_forks(int count);
+pthread_mutex_t	**create_forks(int count);
 
-void			destroy_forks(pthread_mutex_t *forks, int count);
+void			destroy_forks(pthread_mutex_t **forks, int count);
 
 t_philo			*create_philos(t_simulation *simulation,
-					pthread_mutex_t *forks);
+					pthread_mutex_t **forks);
 
 void			run_simulation(t_simulation *simulation, t_philo *philos);
 
@@ -103,4 +103,11 @@ int				check_stop(t_simulation *simulation);
 
 void			set_stop(t_simulation *simulation, int status);
 
+int				philo_think(t_philo *philo);
+
+int				philo_get_forks(t_philo *philo);
+
+int				philo_eat(t_philo *philo);
+
+int				philo_sleep(t_philo *philo);
 #endif

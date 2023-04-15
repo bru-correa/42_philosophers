@@ -16,10 +16,10 @@
 
 static t_philo	setup_philo(
 					t_simulation *simulation,
-					pthread_mutex_t *forks,
+					pthread_mutex_t **forks,
 					unsigned int index);
 
-t_philo	*create_philos(t_simulation *simulation, pthread_mutex_t *forks)
+t_philo	*create_philos(t_simulation *simulation, pthread_mutex_t **forks)
 {
 	t_philo			*philos;
 	unsigned int	i;
@@ -38,7 +38,7 @@ t_philo	*create_philos(t_simulation *simulation, pthread_mutex_t *forks)
 
 static t_philo	setup_philo(
 					t_simulation *simulation,
-					pthread_mutex_t *forks,
+					pthread_mutex_t **forks,
 					unsigned int index)
 {
 	t_philo	philo;
@@ -50,12 +50,10 @@ static t_philo	setup_philo(
 	if (index == 0)
 	{
 		philo.next_fork = forks[0];
-		philo.prev_fork = forks[simulation->philo_count - 1];
-	}
-	else if (index == simulation->philo_count - 1)
-	{
-		philo.next_fork = forks[index - 1];
-		philo.prev_fork = forks[index];
+		if (simulation->philo_count == 1)
+			philo.prev_fork = NULL;
+		else
+			philo.prev_fork = forks[simulation->philo_count - 1];
 	}
 	else
 	{

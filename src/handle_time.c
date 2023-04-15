@@ -21,9 +21,9 @@ unsigned int	get_current_time(void)
 	return (get_time_in_ms());
 }
 
-unsigned int	get_delta_time(long long start_time)
+unsigned int	get_delta_time(unsigned int start_time)
 {
-	long long	current_time;
+	unsigned int	current_time;
 
 	current_time = get_time_in_ms();
 	return (current_time - start_time);

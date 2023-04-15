@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <pthread.h>
+#include <stdio.h>
 #include <unistd.h>
 
 static int	check_death(t_simulation *simulation, t_philo *philos);
@@ -38,8 +40,10 @@ static int	check_meals(t_simulation *simulation, t_philo *philos)
 	i = 0;
 	while (i < simulation->philo_count)
 	{
+		// pthread_mutex_lock(&philos[i].last_meal_lock);
 		if (philos[i].meals_count > 0)
 			return (FALSE);
+		// pthread_mutex_unlock(&philos[i].last_meal_lock);
 		i++;
 	}
 	return (TRUE);
@@ -52,12 +56,14 @@ static int	check_death(t_simulation *simulation, t_philo *philos)
 	i = 0;
 	while (i < simulation->philo_count)
 	{
-		if (get_delta_time(philos->last_meal_time) >= simulation->time_to_die)
+		// pthread_mutex_lock(&philos[i].last_meal_lock);
+		if (get_delta_time(philos[i].last_meal_time) >= simulation->time_to_die && philos[i].meals_count != 0)
 		{
 			set_stop(simulation, TRUE);
 			log_death(philos[i]);
 			return (TRUE);
 		}
+		// pthread_mutex_unlock(&philos[i].last_meal_lock);
 		i++;
 	}
 	return (FALSE);
