@@ -17,23 +17,24 @@
 #include <unistd.h>
 
 static void	check_arg_count(int argc);
-static int	set_meals_count(int argc, char *arg);
-static int	set_timer(char *arg, char *arg_name);
-static int	set_count(char *arg, char *arg_name);
+static int	set_meals_count(int argc, char *arg, t_simulation *simulation);
+static int	set_timer(char *arg, char *arg_name, t_simulation *simulation);
+static int	set_count(char *arg, char *arg_name, t_simulation *simulation);
 
 t_simulation	*create_simulation(int argc, char **argv)
 {
 	t_simulation	*simulation;
 
+	check_arg_count(argc);
 	simulation = malloc(sizeof(t_simulation));
 	if (simulation == NULL)
 		exit(EXIT_FAILURE);
-	check_arg_count(argc);
-	simulation->philo_count = set_count(argv[1], "number_of_philosophers");
-	simulation->time_to_die = set_timer(argv[2], "time_to_die");
-	simulation->time_to_eat = set_timer(argv[3], "time_to_eat");
-	simulation->time_to_sleep = set_timer(argv[4], "time_to_sleep");
-	simulation->philo_meals_count = set_meals_count(argc, argv[5]);
+	simulation->philo_count = set_count(argv[1], "number_of_philosophers",
+			simulation);
+	simulation->time_to_die = set_timer(argv[2], "time_to_die", simulation);
+	simulation->time_to_eat = set_timer(argv[3], "time_to_eat", simulation);
+	simulation->time_to_sleep = set_timer(argv[4], "time_to_sleep", simulation);
+	simulation->philo_meals_count = set_meals_count(argc, argv[5], simulation);
 	simulation->start_time = get_current_time();
 	simulation->stop = FALSE;
 	pthread_mutex_init(&simulation->print_lock, NULL);
@@ -58,7 +59,7 @@ static void	check_arg_count(int argc)
 }
 
 // Return -1 in case of unlimited meals
-static int	set_meals_count(int argc, char *arg)
+static int	set_meals_count(int argc, char *arg, t_simulation *simulation)
 {
 	if (argc == 6)
 	{
@@ -66,14 +67,16 @@ static int	set_meals_count(int argc, char *arg)
 		{
 			ft_putstr_fd("ERROR: ", STDERR_FILENO);
 			ft_putstr_fd("You need to pass a valid number\n", STDERR_FILENO);
+			free(simulation);
 			exit(EXIT_FAILURE);
 		}
-		return (set_count(arg, "number_of_time_each_philosophers_must_eat"));
+		return (set_count(arg, "number_of_time_each_philosophers_must_eat",
+				simulation));
 	}
 	return (-1);
 }
 
-static int	set_timer(char *arg, char *arg_name)
+static int	set_timer(char *arg, char *arg_name, t_simulation *simulation)
 {
 	int	count;
 
@@ -81,6 +84,7 @@ static int	set_timer(char *arg, char *arg_name)
 	{
 		ft_putstr_fd("ERROR: ", STDERR_FILENO);
 		ft_putstr_fd("You need to pass a valid number\n", STDERR_FILENO);
+		free(simulation);
 		exit(EXIT_FAILURE);
 	}
 	count = ft_atoi(arg);
@@ -90,18 +94,20 @@ static int	set_timer(char *arg, char *arg_name)
 		ft_putstr_fd("Can't have negative numbers in ", STDERR_FILENO);
 		ft_putstr_fd(arg_name, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
+		free(simulation);
 		exit(EXIT_FAILURE);
 	}
 	return (count);
 }
 
-static int	set_count(char *arg, char *arg_name)
+static int	set_count(char *arg, char *arg_name, t_simulation *simulation)
 {
 	int	count;
 
 	if (is_number(arg) == FALSE)
 	{
 		ft_putstr_fd("ERROR: You need to pass a valid number\n", STDERR_FILENO);
+		free(simulation);
 		exit(EXIT_FAILURE);
 	}
 	count = ft_atoi(arg);
@@ -111,6 +117,7 @@ static int	set_count(char *arg, char *arg_name)
 		ft_putstr_fd("The number must be greater than 1 in ", STDERR_FILENO);
 		ft_putstr_fd(arg_name, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
+		free(simulation);
 		exit(EXIT_FAILURE);
 	}
 	return (count);
