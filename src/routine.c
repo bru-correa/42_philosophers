@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 18:09:52 by bcorrea-          #+#    #+#             */
-/*   Updated: 2023/04/12 18:09:52 by bcorrea-         ###   ########.fr       */
+/*   Updated: 2023/04/16 07:38:53 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	*routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep((philo->simulation->time_to_eat - 10) * 1000);
 	while (philo->meals_count != 0)
 	{
 		if (philo_think(philo) == FAILURE)
