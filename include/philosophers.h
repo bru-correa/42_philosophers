@@ -54,7 +54,7 @@ typedef struct s_philo
 	unsigned int	id;
 	unsigned int	meals_count;
 	unsigned int	last_meal_time;
-	pthread_mutex_t	last_meal_lock;
+	pthread_mutex_t	*meal_lock;
 	pthread_mutex_t	*next_fork;
 	pthread_mutex_t	*prev_fork;
 	t_simulation	*simulation;
@@ -110,4 +110,11 @@ int				philo_get_forks(t_philo *philo);
 int				philo_eat(t_philo *philo);
 
 int				philo_sleep(t_philo *philo);
+
+int				check_ate_all_meals(t_philo philo);
+
+void			eat_meal(t_philo *philo);
+
+void			release_forks(t_philo *philo);
+
 #endif

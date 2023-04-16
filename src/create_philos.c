@@ -46,7 +46,10 @@ static t_philo	setup_philo(
 	philo.id = index + 1;
 	philo.meals_count = simulation->philo_meals_count;
 	philo.last_meal_time = simulation->start_time;
-	pthread_mutex_init(&philo.last_meal_lock, NULL);
+	philo.meal_lock = malloc(sizeof(pthread_mutex_t));
+	if (philo.meal_lock == NULL)
+		exit(EXIT_FAILURE);
+	pthread_mutex_init(philo.meal_lock, NULL);
 	if (index == 0)
 	{
 		philo.next_fork = forks[0];

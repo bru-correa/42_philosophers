@@ -16,7 +16,7 @@ MAIN				= philosophers.c
 VALGRIND			= valgrind --leak-check=full --show-leak-kinds=all
 VALGRIND			+= --track-origins=yes --quiet --tool=memcheck
 
-HELGRIND			= valgrind --tool=helgrind
+HELGRIND			= valgrind --tool=helgrind --quiet --ignore-thread-creation=yes
 
 # ********** RULES ********** #
 
@@ -58,7 +58,7 @@ setup_debug:
 debug:				clean setup_debug all
 
 run:				all
-					./$(NAME) 5 400 100 100 10
+					@./$(NAME) 5 400 100 100 10
 
 runv:				all
 					@$(VALGRIND) ./$(NAME) 5 400 100 100 10
@@ -67,9 +67,9 @@ runh:				all
 					@$(HELGRIND) ./$(NAME) 5 400 100 100 10
 
 test:				all
-					./tests/tests.sh
+					@./tests/tests.sh
 
 norm:
-					norminette | grep Error
+					@norminette | grep Error
 
 .PHONY:	all run clean fclean re re_bonus debug setup_debug norm

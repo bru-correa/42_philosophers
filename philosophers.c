@@ -14,6 +14,19 @@
 #include <pthread.h>
 #include <stdlib.h>
 
+static void	destroy_philos(t_philo *philos)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < philos->simulation->philo_count)
+	{
+		free(philos[i].meal_lock);
+		i++;
+	}
+	free(philos);
+}
+
 int	main(int argc, char **argv)
 {
 	t_simulation	*simulation;
@@ -25,7 +38,7 @@ int	main(int argc, char **argv)
 	philos = create_philos(simulation, forks);
 	run_simulation(simulation, philos);
 	destroy_forks(forks, simulation->philo_count);
+	destroy_philos(philos);
 	destroy_simulation(simulation);
-	free(philos);
 	return (0);
 }

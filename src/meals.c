@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   meals.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 18:09:52 by bcorrea-          #+#    #+#             */
-/*   Updated: 2023/04/12 18:09:52 by bcorrea-         ###   ########.fr       */
+/*   Created: 2023/04/15 19:14:06 by bcorrea-          #+#    #+#             */
+/*   Updated: 2023/04/15 19:14:06 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,24 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	*routine(t_philo *philo)
+int	check_ate_all_meals(t_philo philo)
 {
-	if (philo->id % 2 == 0)
-		usleep(1000);
-	while (philo->meals_count != 0)
+	pthread_mutex_lock(philo.meal_lock);
+	if (philo.meals_count == 0)
 	{
-		if (philo_think(philo) == FAILURE)
-			break;
-		if (philo_get_forks(philo) == FAILURE)
-			break;
-		if (philo_eat(philo) == FAILURE)
-			break ;
-		release_forks(philo);
-		if (philo_sleep(philo) == FAILURE)
-			break ;
+		pthread_mutex_unlock(philo.meal_lock);
+		return (TRUE);
 	}
-	return (NULL);
+	pthread_mutex_unlock(philo.meal_lock);
+	return (FALSE);
+}
+
+void	eat_meal(t_philo *philo)
+{
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal_time = get_current_time();
+	if (philo->meals_count > 0)
+		philo->meals_count--;
+	pthread_mutex_unlock(philo->meal_lock);
+	usleep(philo->simulation->time_to_sleep * 1000);
 }

@@ -18,7 +18,7 @@
 int	philo_think(t_philo *philo)
 {
 	if (check_stop(philo->simulation) == TRUE)
-		return (FAILURE);;
+		return (FAILURE);
 	log_state_change(*philo, THINKING);
 	return (SUCCESS);
 }
@@ -29,13 +29,11 @@ int	philo_get_forks(t_philo *philo)
 		return (FAILURE);
 	pthread_mutex_lock(philo->next_fork);
 	log_fork(*philo);
-	if (check_stop(philo->simulation) == TRUE)
+	if (check_stop(philo->simulation) == TRUE || philo->prev_fork == NULL)
 	{
 		pthread_mutex_unlock(philo->next_fork);
 		return (FAILURE);
 	}
-	if (philo->prev_fork == NULL)
-		return (FAILURE);
 	pthread_mutex_lock(philo->prev_fork);
 	if (check_stop(philo->simulation) == TRUE)
 	{
@@ -47,19 +45,16 @@ int	philo_get_forks(t_philo *philo)
 	return (SUCCESS);
 }
 
+void	release_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->next_fork);
+	pthread_mutex_unlock(philo->prev_fork);
+}
+
 int	philo_eat(t_philo *philo)
 {
 	log_state_change(*philo, EATING);
-	philo->last_meal_time = get_current_time();
-	usleep(philo->simulation->time_to_eat * 1000);
-	pthread_mutex_unlock(philo->next_fork);
-	pthread_mutex_unlock(philo->prev_fork);
-	pthread_mutex_lock(&philo->last_meal_lock);
-	if (philo->meals_count > 0)
-	{
-		philo->meals_count--;
-	}
-	pthread_mutex_unlock(&philo->last_meal_lock);
+	eat_meal(philo);
 	return (SUCCESS);
 }
 
