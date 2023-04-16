@@ -18,7 +18,7 @@
 void	*routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		usleep((philo->simulation->time_to_eat - 10) * 1000);
+		usleep(1000);
 	while (philo->meals_count != 0)
 	{
 		if (philo_think(philo) == FAILURE)
