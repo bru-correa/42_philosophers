@@ -22,9 +22,9 @@ void	*routine(t_philo *philo)
 	while (philo->meals_count != 0)
 	{
 		if (philo_think(philo) == FAILURE)
-			break;
+			break ;
 		if (philo_get_forks(philo) == FAILURE)
-			break;
+			break ;
 		if (philo_eat(philo) == FAILURE)
 			break ;
 		release_forks(philo);

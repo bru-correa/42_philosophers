@@ -66,7 +66,7 @@ static int	is_alive(t_philo *philo, t_simulation *simulation)
 {
 	pthread_mutex_lock(philo->meal_lock);
 	if (get_delta_time(philo->last_meal_time) >= simulation->time_to_die
-			&& philo->meals_count != 0)
+		&& philo->meals_count != 0)
 	{
 		log_death(*philo);
 		pthread_mutex_unlock(philo->meal_lock);
