@@ -15,10 +15,6 @@ FILENAMES			+= stop watch_philos
 SRC_FILES			= $(foreach filename,$(FILENAMES),$(SRC_DIR)/$(filename).c)
 OBJ_FILES			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 MAIN					= philosophers.c
-VALGRIND			= valgrind --leak-check=full --show-leak-kinds=all
-VALGRIND			+= --track-origins=yes --quiet --tool=memcheck
-
-HELGRIND			= valgrind --tool=helgrind --quiet --ignore-thread-creation=yes
 
 # ********** RULES ********** #
 
@@ -59,19 +55,4 @@ setup_debug:
 # Compile with -g flag and output the 'debug' file
 debug:				clean setup_debug all
 
-run:				all
-					@./$(NAME) 5 400 100 100 10
-
-runv:				all
-					@$(VALGRIND) ./$(NAME) 5 400 100 100 10
-
-runh:				all
-					@$(HELGRIND) ./$(NAME) 5 400 100 100 10
-
-test:				all
-					@./tests/tests.sh
-
-norm:
-					@norminette | grep Error
-
-.PHONY:	all run clean fclean re re_bonus debug setup_debug norm
+.PHONY:	all run clean fclean re re_bonus debug setup_debug
