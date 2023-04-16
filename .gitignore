@@ -1,7 +1,7 @@
-philo
 *.o
 *.a
 compile_flags.txt
 debug
 tests
 excalidraw
+philo/philo
