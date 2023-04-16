@@ -34,5 +34,5 @@ void	eat_meal(t_philo *philo)
 	if (philo->meals_count > 0)
 		philo->meals_count--;
 	pthread_mutex_unlock(philo->meal_lock);
-	usleep(philo->simulation->time_to_sleep * 1000);
+	usleep(philo->simulation->time_to_eat * 1000);
 }
