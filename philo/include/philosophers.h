@@ -117,4 +117,6 @@ void			eat_meal(t_philo *philo);
 
 void			release_forks(t_philo *philo);
 
+int				is_number(char *str);
+
 #endif

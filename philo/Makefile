@@ -10,11 +10,11 @@ LIB_DIR				= lib
 LIBFT_DIR			= lib/libft
 
 FILENAMES			= create_philos create_simulation destroy_simulation forks
-FILENAMES			+= handle_time log meals philo_actions routine
-FILENAMES			+= run_simulation stop watch_philos
+FILENAMES			+= handle_time log meals philo_actions routine run_simulation
+FILENAMES			+= stop watch_philos is_number
 SRC_FILES			= $(foreach filename,$(FILENAMES),$(SRC_DIR)/$(filename).c)
 OBJ_FILES			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
-MAIN				= philosophers.c
+MAIN					= philosophers.c
 
 # ********** RULES ********** #
 
