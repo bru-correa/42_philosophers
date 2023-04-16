@@ -60,13 +60,15 @@ static void	check_arg_count(int argc)
 // Return -1 in case of unlimited meals
 static int	set_meals_count(int argc, char *arg)
 {
-	if (is_number(arg) == FALSE)
-	{
-		ft_putstr_fd("ERROR: You need to pass a valid number\n", STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
 	if (argc == 6)
+	{
+		if (is_number(arg) == FALSE)
+		{
+			ft_putstr_fd("ERROR: You need to pass a valid number\n", STDERR_FILENO);
+			exit(EXIT_FAILURE);
+		}
 		return (set_count(arg, "number_of_time_each_philosophers_must_eat"));
+	}
 	return (-1);
 }
 
