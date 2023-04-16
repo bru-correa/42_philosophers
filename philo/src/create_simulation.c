@@ -64,7 +64,8 @@ static int	set_meals_count(int argc, char *arg)
 	{
 		if (is_number(arg) == FALSE)
 		{
-			ft_putstr_fd("ERROR: You need to pass a valid number\n", STDERR_FILENO);
+			ft_putstr_fd("ERROR: ", STDERR_FILENO);
+			ft_putstr_fd("You need to pass a valid number\n", STDERR_FILENO);
 			exit(EXIT_FAILURE);
 		}
 		return (set_count(arg, "number_of_time_each_philosophers_must_eat"));
@@ -78,7 +79,8 @@ static int	set_timer(char *arg, char *arg_name)
 
 	if (is_number(arg) == FALSE)
 	{
-		ft_putstr_fd("ERROR: You need to pass a valid number\n", STDERR_FILENO);
+		ft_putstr_fd("ERROR: ", STDERR_FILENO);
+		ft_putstr_fd("You need to pass a valid number\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	count = ft_atoi(arg);
