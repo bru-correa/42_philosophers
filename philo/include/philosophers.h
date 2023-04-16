@@ -119,4 +119,8 @@ void			release_forks(t_philo *philo);
 
 int				is_number(char *str);
 
+int				ft_isdigit(int c);
+
+int				ft_atoi(const char *str);
+
 #endif

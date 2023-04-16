@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "philosophers.h"
 #include <pthread.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -46,14 +46,12 @@ static void	check_arg_count(int argc)
 {
 	if (argc < 5)
 	{
-		ft_putstr_fd("Error\nYou must pass all the necessary arguments\n",
-			STDERR_FILENO);
+		printf("Error\nYou must pass all the necessary arguments\n");
 		exit(EXIT_FAILURE);
 	}
 	else if (argc > 6)
 	{
-		ft_putstr_fd("Error\nToo many arguments\n",
-			STDERR_FILENO);
+		printf("Error\nToo many arguments\n");
 		exit(EXIT_FAILURE);
 	}
 }
@@ -65,8 +63,7 @@ static int	set_meals_count(int argc, char *arg, t_simulation *simulation)
 	{
 		if (is_number(arg) == FALSE)
 		{
-			ft_putstr_fd("ERROR: ", STDERR_FILENO);
-			ft_putstr_fd("You need to pass a valid number\n", STDERR_FILENO);
+			printf("ERROR: You need to pass a valid number\n");
 			free(simulation);
 			exit(EXIT_FAILURE);
 		}
@@ -82,18 +79,14 @@ static int	set_timer(char *arg, char *arg_name, t_simulation *simulation)
 
 	if (is_number(arg) == FALSE)
 	{
-		ft_putstr_fd("ERROR: ", STDERR_FILENO);
-		ft_putstr_fd("You need to pass a valid number\n", STDERR_FILENO);
+		printf("ERROR: You need to pass a valid number\n");
 		free(simulation);
 		exit(EXIT_FAILURE);
 	}
 	count = ft_atoi(arg);
 	if (count < 0)
 	{
-		ft_putstr_fd("ERROR: ", STDERR_FILENO);
-		ft_putstr_fd("Can't have negative numbers in ", STDERR_FILENO);
-		ft_putstr_fd(arg_name, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
+		printf("ERRROR: Can't have negative numbers in %s\n", arg_name);
 		free(simulation);
 		exit(EXIT_FAILURE);
 	}
@@ -106,17 +99,14 @@ static int	set_count(char *arg, char *arg_name, t_simulation *simulation)
 
 	if (is_number(arg) == FALSE)
 	{
-		ft_putstr_fd("ERROR: You need to pass a valid number\n", STDERR_FILENO);
+		printf("ERROR: You need to pass a valid number\n");
 		free(simulation);
 		exit(EXIT_FAILURE);
 	}
 	count = ft_atoi(arg);
 	if (count <= 0)
 	{
-		ft_putstr_fd("ERROR: ", STDERR_FILENO);
-		ft_putstr_fd("The number must be greater than 1 in ", STDERR_FILENO);
-		ft_putstr_fd(arg_name, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
+		printf("ERROR: The number must be greater than 1 in %s\n", arg_name);
 		free(simulation);
 		exit(EXIT_FAILURE);
 	}

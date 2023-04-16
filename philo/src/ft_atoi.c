@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/10 16:52:59 by bcorrea-          #+#    #+#             */
-/*   Updated: 2021/09/11 16:54:41 by bcorrea-         ###   ########.fr       */
+/*   Created: 2023/04/16 12:58:16 by bcorrea-          #+#    #+#             */
+/*   Updated: 2023/04/16 12:58:16 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philosophers.h"
 
 static int	ft_isspace(const char c);
 static int	get_decimals(const char *str);

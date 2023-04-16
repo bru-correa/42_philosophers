@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
-#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 static unsigned int	get_time_in_ms(void);
@@ -36,7 +37,7 @@ static unsigned int	get_time_in_ms(void)
 
 	if (gettimeofday(&tv, NULL) == -1)
 	{
-		ft_putstr_fd("ERROR\nCan't get timestamp\n", STDERR_FILENO);
+		printf("ERROR\nCan't get timestamp\n");
 		exit(EXIT_FAILURE);
 	}
 	time_in_ms = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
