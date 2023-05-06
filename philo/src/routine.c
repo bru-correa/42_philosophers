@@ -31,5 +31,8 @@ void	*routine(t_philo *philo)
 		if (philo_sleep(philo) == FAILURE)
 			break ;
 	}
+	if (philo->meals_count == 0) {
+		log_meal_end(*philo);
+	}
 	return (NULL);
 }

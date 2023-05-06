@@ -30,7 +30,7 @@ void	watch_philos(t_simulation *simulation, t_philo *philos)
 		}
 		else if (is_dinner_over(simulation, philos))
 			break ;
-		usleep(100);
+		usleep(10);
 	}
 }
 

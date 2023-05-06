@@ -28,12 +28,12 @@ int	philo_get_forks(t_philo *philo)
 	if (check_stop(philo->simulation) == TRUE)
 		return (FAILURE);
 	pthread_mutex_lock(philo->next_fork);
-	log_fork(*philo);
 	if (check_stop(philo->simulation) == TRUE || philo->prev_fork == NULL)
 	{
 		pthread_mutex_unlock(philo->next_fork);
 		return (FAILURE);
 	}
+	log_fork(*philo);
 	pthread_mutex_lock(philo->prev_fork);
 	if (check_stop(philo->simulation) == TRUE)
 	{

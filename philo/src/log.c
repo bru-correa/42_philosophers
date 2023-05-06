@@ -43,3 +43,13 @@ void	log_death(t_philo philo)
 	printf("%u %d died\n", timestamp, philo.id);
 	pthread_mutex_unlock(&philo.simulation->print_lock);
 }
+
+void	log_meal_end(t_philo philo)
+{
+	unsigned int	timestamp;
+
+	pthread_mutex_lock(&philo.simulation->print_lock);
+	timestamp = get_delta_time(philo.simulation->start_time);
+	printf("%u %d has finished eating\n", timestamp, philo.id);
+	pthread_mutex_unlock(&philo.simulation->print_lock);
+}

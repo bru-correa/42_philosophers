@@ -99,6 +99,8 @@ void			log_death(t_philo philo);
 
 void			log_fork(t_philo philo);
 
+void			log_meal_end(t_philo philo);
+
 int				check_stop(t_simulation *simulation);
 
 void			set_stop(t_simulation *simulation, int status);
